@@ -1,0 +1,46 @@
+name: jellyfin
+services:
+    jellyfin:
+        cpu_shares: 90
+        command: []
+        container_name: jellyfin
+        deploy:
+            resources:
+                limits:
+                    memory: "16198402048"
+        hostname: jellyfin
+        image: jellyfin/jellyfin:latest
+        labels:
+            icon: http://172.16.254.130:8096/web/bc8d51405ec040305a87.ico
+        network_mode: host
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /srv/jellyfin/config
+              target: /config
+              bind:
+                create_host_path: true
+            - type: bind
+              source: /srv/jellyfin/cache
+              target: /cache
+              bind:
+                create_host_path: true
+            - type: bind
+              source: /srv/media/JellyfinMedia
+              target: /media
+              bind:
+                create_host_path: true
+networks:
+    default:
+        name: jellyfin_default
+x-casaos:
+    author: self
+    category: self
+    hostname: ""
+    icon: http://172.16.254.130:8096/web/bc8d51405ec040305a87.ico
+    index: /
+    is_uncontrolled: false
+    port_map: "8096"
+    scheme: http
+    title:
+        custom: JellyFin
